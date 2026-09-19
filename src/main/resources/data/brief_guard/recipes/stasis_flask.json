@@ -1,0 +1,1 @@
+{"type":"minecraft:crafting_shaped","pattern":[" G "," G "," P "],"key":{"G":{"item":"minecraft:glass"},"P":{"item":"minecraft:potion"}},"result":{"item":"brief_guard:stasis_flask","count":1}}

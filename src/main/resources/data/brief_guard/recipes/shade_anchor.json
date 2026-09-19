@@ -1,0 +1,1 @@
+{"type":"minecraft:crafting_shaped","pattern":["BBB","ODO","BBB"],"key":{"B":{"item":"minecraft:blackstone"},"O":{"item":"minecraft:obsidian"},"D":{"item":"minecraft:black_dye"}},"result":{"item":"brief_guard:shade_anchor","count":1}}

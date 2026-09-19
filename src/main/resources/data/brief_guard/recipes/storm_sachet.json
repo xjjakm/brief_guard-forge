@@ -1,0 +1,1 @@
+{"type":"minecraft:crafting_shaped","pattern":["CCC","CGC","CCC"],"key":{"C":{"item":"minecraft:copper_ingot"},"G":{"item":"minecraft:gunpowder"}},"result":{"item":"brief_guard:storm_sachet","count":2}}

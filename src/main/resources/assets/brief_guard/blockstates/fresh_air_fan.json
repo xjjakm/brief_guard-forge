@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "running=true": { "model": "brief_guard:block/fresh_air_fan" },
+    "running=false": { "model": "brief_guard:block/fresh_air_fan" }
+  }
+}

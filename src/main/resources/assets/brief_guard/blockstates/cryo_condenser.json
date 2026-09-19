@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "running=true": { "model": "brief_guard:block/cryo_condenser" },
+    "running=false": { "model": "brief_guard:block/cryo_condenser" }
+  }
+}

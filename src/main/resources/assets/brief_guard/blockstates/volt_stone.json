@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "running=true": { "model": "brief_guard:block/volt_stone" },
+    "running=false": { "model": "brief_guard:block/volt_stone" }
+  }
+}

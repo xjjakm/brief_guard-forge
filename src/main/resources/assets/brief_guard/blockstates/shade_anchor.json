@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "running=true": { "model": "brief_guard:block/shade_anchor" },
+    "running=false": { "model": "brief_guard:block/shade_anchor" }
+  }
+}

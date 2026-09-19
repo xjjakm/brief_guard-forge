@@ -44,6 +44,21 @@ public final class GeneratedMod {
     public static final ArmorMaterial SWORD_MATERIAL = new BriefsMaterial("sword", 28, 6, 1, 9, SoundEvents.ARMOR_EQUIP_IRON, 0.0F, Ingredient.of(Items.IRON_INGOT));
     public static final ArmorMaterial SHIELD_MATERIAL = new BriefsMaterial("shield", 34, 9, 2, 11, SoundEvents.ARMOR_EQUIP_IRON, 0.3F, Ingredient.of(Items.IRON_INGOT));
 
+    // 扩展：十二种以复杂机制为主的新内裤材料
+    public static final ArmorMaterial MECHANICAL_MATERIAL = new BriefsMaterial("mechanical", 30, 6, 1, 12, SoundEvents.ARMOR_EQUIP_IRON, 0.0F, Ingredient.of(Items.COPPER_INGOT));
+    public static final ArmorMaterial SEVEN_CURSES_MATERIAL = new BriefsMaterial("seven_curses", 25, 7, 1, 15, SoundEvents.ARMOR_EQUIP_NETHERITE, 0.0F, Ingredient.of(Items.AMETHYST_SHARD));
+    public static final ArmorMaterial HI_TEETH_MATERIAL = new BriefsMaterial("hi_teeth", 20, 5, 0, 10, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, Ingredient.of(Items.BONE));
+    public static final ArmorMaterial FIREWORK_MATERIAL = new BriefsMaterial("firework", 18, 5, 0, 12, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0F, Ingredient.of(Items.GUNPOWDER));
+    public static final ArmorMaterial BRIEFS_BRIEFS_MATERIAL = new BriefsMaterial("briefs_briefs", 26, 6, 1, 8, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, Ingredient.of(Items.WHITE_WOOL));
+    public static final ArmorMaterial POOR_MATERIAL = new BriefsMaterial("poor", 8, 3, 0, 4, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0F, Ingredient.of(Items.LEATHER));
+    public static final ArmorMaterial BROKEN_MATERIAL = new BriefsMaterial("broken", 5, 1, 0, 2, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0F, Ingredient.of(Items.STRING));
+    public static final ArmorMaterial HEAVY_MATERIAL = new BriefsMaterial("heavy", 40, 9, 2, 6, SoundEvents.ARMOR_EQUIP_IRON, 0.2F, Ingredient.of(Items.IRON_INGOT));
+    public static final ArmorMaterial RAINBOW_MATERIAL = new BriefsMaterial("rainbow", 25, 6, 1, 14, SoundEvents.ARMOR_EQUIP_DIAMOND, 0.0F, Ingredient.of(Items.GLOWSTONE_DUST));
+    public static final ArmorMaterial CURRY_MATERIAL = new BriefsMaterial("curry", 12, 4, 0, 8, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, Ingredient.of(Items.YELLOW_DYE));
+    public static final ArmorMaterial ENDER_PEARL_MATERIAL = new BriefsMaterial("ender_pearl", 22, 7, 1, 12, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0F, Ingredient.of(Items.ENDER_PEARL));
+    public static final ArmorMaterial CREEPER_MATERIAL = new BriefsMaterial("creeper", 20, 6, 1, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0F, Ingredient.of(Items.GUNPOWDER));
+    public static final ArmorMaterial MIRROR_MATERIAL = new BriefsMaterial("mirror", 27, 7, 1, 11, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, Ingredient.of(Items.GLASS));
+
     public static final RegistryObject<Item> LEATHER_BRIEFS = ITEMS.register("leather_briefs", () -> new BriefsArmorItem(LEATHER_MATERIAL, Type.HELMET, BriefsMaterialKind.LEATHER, new Item.Properties().durability(65)));
     public static final RegistryObject<Item> COPPER_BRIEFS = ITEMS.register("copper_briefs", () -> new BriefsArmorItem(COPPER_MATERIAL, Type.CHESTPLATE, BriefsMaterialKind.COPPER, new Item.Properties().durability(91)));
     public static final RegistryObject<Item> CHAIN_BRIEFS = ITEMS.register("chain_briefs", () -> new BriefsArmorItem(CHAIN_MATERIAL, Type.CHESTPLATE, BriefsMaterialKind.CHAIN, new Item.Properties().durability(156)));
@@ -68,9 +83,31 @@ public final class GeneratedMod {
     public static final RegistryObject<Item> SWORD_BRIEFS = ITEMS.register("sword_briefs", () -> new BriefsArmorItem(SWORD_MATERIAL, Type.CHESTPLATE, BriefsMaterialKind.SWORD, new Item.Properties().durability(364)));
     public static final RegistryObject<Item> SHIELD_BRIEFS = ITEMS.register("shield_briefs", () -> new BriefsArmorItem(SHIELD_MATERIAL, Type.CHESTPLATE, BriefsMaterialKind.SHIELD, new Item.Properties().durability(442)));
 
+    // 扩展：十二种以复杂机制为主的新内裤物品
+    public static final RegistryObject<Item> MECHANICAL_BRIEFS = ITEMS.register("mechanical_briefs", () -> new BriefsArmorItem(MECHANICAL_MATERIAL, Type.CHESTPLATE, BriefsMaterialKind.MECHANICAL, new Item.Properties().durability(390)));
+    public static final RegistryObject<Item> SEVEN_CURSES_BRIEFS = ITEMS.register("seven_curses_briefs", () -> new BriefsArmorItem(SEVEN_CURSES_MATERIAL, Type.CHESTPLATE, BriefsMaterialKind.SEVEN_CURSES, new Item.Properties().durability(325)));
+    public static final RegistryObject<Item> HI_TEETH_BRIEFS = ITEMS.register("hi_teeth_briefs", () -> new BriefsArmorItem(HI_TEETH_MATERIAL, Type.CHESTPLATE, BriefsMaterialKind.HI_TEETH, new Item.Properties().durability(260)));
+    public static final RegistryObject<Item> FIREWORK_BRIEFS = ITEMS.register("firework_briefs", () -> new BriefsArmorItem(FIREWORK_MATERIAL, Type.CHESTPLATE, BriefsMaterialKind.FIREWORK, new Item.Properties().durability(234)));
+    public static final RegistryObject<Item> BRIEFS_BRIEFS = ITEMS.register("briefs_briefs", () -> new BriefsArmorItem(BRIEFS_BRIEFS_MATERIAL, Type.CHESTPLATE, BriefsMaterialKind.BRIEFS_BRIEFS, new Item.Properties().durability(338)));
+    public static final RegistryObject<Item> POOR_BRIEFS = ITEMS.register("poor_briefs", () -> new BriefsArmorItem(POOR_MATERIAL, Type.CHESTPLATE, BriefsMaterialKind.POOR, new Item.Properties().durability(104)));
+    public static final RegistryObject<Item> BROKEN_BRIEFS = ITEMS.register("broken_briefs", () -> new BriefsArmorItem(BROKEN_MATERIAL, Type.CHESTPLATE, BriefsMaterialKind.BROKEN, new Item.Properties().durability(65)));
+    public static final RegistryObject<Item> HEAVY_BRIEFS = ITEMS.register("heavy_briefs", () -> new BriefsArmorItem(HEAVY_MATERIAL, Type.CHESTPLATE, BriefsMaterialKind.HEAVY, new Item.Properties().durability(520)));
+    public static final RegistryObject<Item> RAINBOW_BRIEFS = ITEMS.register("rainbow_briefs", () -> new BriefsArmorItem(RAINBOW_MATERIAL, Type.CHESTPLATE, BriefsMaterialKind.RAINBOW, new Item.Properties().durability(325)));
+    public static final RegistryObject<Item> CURRY_BRIEFS = ITEMS.register("curry_briefs", () -> new BriefsArmorItem(CURRY_MATERIAL, Type.CHESTPLATE, BriefsMaterialKind.CURRY, new Item.Properties().durability(156)));
+    public static final RegistryObject<Item> ENDER_PEARL_BRIEFS = ITEMS.register("ender_pearl_briefs", () -> new BriefsArmorItem(ENDER_PEARL_MATERIAL, Type.CHESTPLATE, BriefsMaterialKind.ENDER_PEARL, new Item.Properties().durability(286)));
+    public static final RegistryObject<Item> CREEPER_BRIEFS = ITEMS.register("creeper_briefs", () -> new BriefsArmorItem(CREEPER_MATERIAL, Type.CHESTPLATE, BriefsMaterialKind.CREEPER, new Item.Properties().durability(260)));
+    public static final RegistryObject<Item> MIRROR_BRIEFS = ITEMS.register("mirror_briefs", () -> new BriefsArmorItem(MIRROR_MATERIAL, Type.CHESTPLATE, BriefsMaterialKind.MIRROR, new Item.Properties().durability(351)));
+
     public GeneratedMod() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ITEMS.register(bus);
+        BriefsGear.init(bus);
+        BriefsEcho.init(bus);
+        BriefsCryo.init(bus);
+        BriefsFlux.init(bus);
+        BriefsStorm.init(bus);
+        BriefsShadow.init(bus);
+        BriefsChrono.init(bus);
         bus.addListener(BriefsCapability::registerCapabilities);
         BriefsNetwork.init();
     }

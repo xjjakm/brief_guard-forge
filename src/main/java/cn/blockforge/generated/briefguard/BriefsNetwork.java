@@ -23,6 +23,8 @@ public final class BriefsNetwork {
     public static void init() {
         CHANNEL.registerMessage(nextId++, SyncPacket.class, SyncPacket::encode, SyncPacket::decode, SyncPacket::handle);
         CHANNEL.registerMessage(nextId++, RemovePacket.class, RemovePacket::encode, RemovePacket::decode, RemovePacket::handle);
+        CHANNEL.registerMessage(nextId++, ActivatePacket.class, ActivatePacket::encode, ActivatePacket::decode, ActivatePacket::handle);
+        CHANNEL.registerMessage(nextId++, AccumPacket.class, AccumPacket::encode, AccumPacket::decode, AccumPacket::handle);
     }
 
     public static void sync(ServerPlayer player) {
@@ -30,9 +32,20 @@ public final class BriefsNetwork {
         CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), packet);
     }
 
-    /** Client -> server: ask the server to take the worn briefs off (HUD slot click). */
+    /** Client -> server: ask the server to take the worn briefs off (HUD slot click / 空手右键). */
     public static void sendRemove() {
         CHANNEL.send(PacketDistributor.SERVER.with(() -> null), new RemovePacket());
+    }
+
+    /** Client -> server: trigger the worn briefs' active ability (蹲下+空手右键). */
+    public static void sendActivate() {
+        CHANNEL.send(PacketDistributor.SERVER.with(() -> null), new ActivatePacket());
+    }
+
+    /** Server -> client: push the current accumulation gauge to the tracking player. */
+    public static void syncAccum(ServerPlayer player, int kindOrdinal, int value, int max) {
+        CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
+                new AccumPacket(player.getId(), kindOrdinal, value, max));
     }
 
     private static final class SyncPacket {
@@ -83,6 +96,60 @@ public final class BriefsNetwork {
                     BriefsNetwork.sync(player);
                 }
             });
+            context.setPacketHandled(true);
+        }
+    }
+
+    /** Client -> server: activate the worn briefs' active ability. */
+    private static final class ActivatePacket {
+        private ActivatePacket() {}
+
+        private static void encode(ActivatePacket packet, FriendlyByteBuf buffer) {}
+
+        private static ActivatePacket decode(FriendlyByteBuf buffer) {
+            return new ActivatePacket();
+        }
+
+        private static void handle(ActivatePacket packet, Supplier<NetworkEvent.Context> supplier) {
+            NetworkEvent.Context context = supplier.get();
+            context.enqueueWork(() -> {
+                ServerPlayer player = context.getSender();
+                if (player == null) return;
+                BriefsMechanic.activeRightClick(player);
+            });
+            context.setPacketHandled(true);
+        }
+    }
+
+    /** Server -> client: current accumulation gauge for the HUD. */
+    private static final class AccumPacket {
+        private final int entityId;
+        private final int kindOrdinal;
+        private final int value;
+        private final int max;
+
+        private AccumPacket(int entityId, int kindOrdinal, int value, int max) {
+            this.entityId = entityId;
+            this.kindOrdinal = kindOrdinal;
+            this.value = value;
+            this.max = max;
+        }
+
+        private static void encode(AccumPacket packet, FriendlyByteBuf buffer) {
+            buffer.writeVarInt(packet.entityId);
+            buffer.writeVarInt(packet.kindOrdinal);
+            buffer.writeVarInt(packet.value);
+            buffer.writeVarInt(packet.max);
+        }
+
+        private static AccumPacket decode(FriendlyByteBuf buffer) {
+            return new AccumPacket(buffer.readVarInt(), buffer.readVarInt(), buffer.readVarInt(), buffer.readVarInt());
+        }
+
+        private static void handle(AccumPacket packet, Supplier<NetworkEvent.Context> supplier) {
+            NetworkEvent.Context context = supplier.get();
+            context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
+                    cn.blockforge.generated.briefguard.client.BriefsClient.onAccum(packet.entityId, packet.kindOrdinal, packet.value, packet.max)));
             context.setPacketHandled(true);
         }
     }

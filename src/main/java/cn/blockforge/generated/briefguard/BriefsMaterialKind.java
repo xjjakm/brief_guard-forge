@@ -23,7 +23,22 @@ public enum BriefsMaterialKind {
     STICKY_PISTON(5.0D, 2.0D, 0.0D),    // 粘性活塞内裤：强力击退 + 物品吸铁石
     GASEOUS(2.0D, 0.0D, 0.0D),          // 气态内裤：跳跃提升 + 缓降
     SWORD(8.0D, 0.5D, 0.0D),            // 剑型内裤：极高攻击伤害
-    SHIELD(4.0D, 1.0D, 0.0D);           // 盾牌内裤：承受伤害减免
+    SHIELD(4.0D, 1.0D, 0.0D),           // 盾牌内裤：承受伤害减免
+
+    // 扩展：十二种以复杂机制为主的新内裤
+    MECHANICAL(5.0D, 0.5D, 0.0D),       // 机械动力内裤：动力储能 + 旋转冲击
+    SEVEN_CURSES(4.0D, 0.0D, 0.0D),     // 七咒之内裤：受击叠咒，满七咒释放咒诅爆发
+    HI_TEETH(5.0D, 0.0D, 0.0D),         // 嗨牙裤：牙齿反咬 + 撕咬
+    FIREWORK(6.0D, 0.0D, 0.0D),         // 烟花内裤：烟火积蓄 + 火箭喷发
+    BRIEFS_BRIEFS(2.0D, 0.0D, 0.0D),    // 内裤型内裤：内衬护壳 + 冗余吸收
+    POOR(1.5D, 0.0D, 0.0D),             // 劣质内裤：廉价故障 + 过载反转
+    BROKEN(1.0D, 0.0D, 0.0D),           // 劣质破损内裤：伤害泄漏 + 散架爆发
+    HEAVY(7.0D, 1.0D, 0.0D),            // 重内裤：重量累积 + 震荡砸地
+    RAINBOW(5.0D, 0.0D, 0.0D),          // 炫彩内裤：虹彩轮换 + 元素攻击
+    CURRY(3.0D, 0.0D, 0.0D),            // 咖喱内裤：咖喱力积累 + 咖喱喷吐
+    ENDER_PEARL(3.0D, 0.0D, 0.0D),      // 末影珍珠内裤：末影闪现 + 定向跃迁
+    CREEPER(4.0D, 1.0D, 0.0D),          // 苦力怕内裤：嘶嘶蓄爆 + 苦力怕震撼
+    MIRROR(4.0D, 0.0D, 0.0D);           // 镜像内裤：复印受击伤害，攻击时原样奉还
 
     private final double attackDamage;
     private final double attackKnockback;

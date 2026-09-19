@@ -29,7 +29,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -99,7 +98,25 @@ public final class BriefsEvents {
     @SubscribeEvent
     public static void tick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END || event.player.level().isClientSide()) return;
-        BriefsMechanic.tick(event.player);
+        Player player = event.player;
+        BriefsMechanic.tick(player);
+        BriefsGear.tick(player);
+        BriefsEcho.tick(player);
+        BriefsCryo.tick(player);
+        BriefsFlux.tick(player);
+        BriefsStorm.tick(player);
+        BriefsShadow.tick(player);
+        BriefsChrono.tick(player);
+        // 定期把当前积蓄值推给客户端用于 HUD 提示。
+        if (player.tickCount % 10 == 0 && player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
+            BriefsMaterialKind kind = BriefsMechanic.wornKind(player);
+            if (kind != null) {
+                int[] gauge = BriefsMechanic.gauge(BriefsMechanic.wornStack(player));
+                BriefsNetwork.syncAccum(serverPlayer, kind.ordinal(), gauge[0], gauge[1]);
+            } else {
+                BriefsNetwork.syncAccum(serverPlayer, -1, 0, 0);
+            }
+        }
     }
 
     @SubscribeEvent
@@ -114,6 +131,7 @@ public final class BriefsEvents {
         BriefsMaterialKind kind = wornKind(player);
         if (kind == BriefsMaterialKind.COPPER && event.getSource().is(DamageTypeTags.IS_LIGHTNING)) event.setCanceled(true);
         if ((kind == BriefsMaterialKind.NETHERITE || kind == BriefsMaterialKind.DRAGON_HEAD) && event.getSource().is(DamageTypeTags.IS_FIRE)) event.setCanceled(true);
+        if (BriefsStorm.blocksLightning(player) && event.getSource().is(DamageTypeTags.IS_LIGHTNING)) event.setCanceled(true);
     }
 
     @SubscribeEvent
@@ -130,6 +148,11 @@ public final class BriefsEvents {
         }
         // 扩展款（机制型）统一交给机制引擎。
         BriefsMechanic.onHurt(player, event);
+        BriefsGear.onHurt(player);
+        BriefsEcho.onHurt(player, event);
+        BriefsCryo.onHurt(player, event);
+        BriefsShadow.onHurt(player, event);
+        BriefsChrono.onHurt(player, event);
     }
 
     @SubscribeEvent
@@ -148,25 +171,13 @@ public final class BriefsEvents {
             player.getCooldowns().addCooldown(GeneratedMod.COPPER_BRIEFS.get(), 60);
         }
         BriefsMechanic.onAttack(player, target);
-    }
-
-    @SubscribeEvent
-    public static void removeUnderwear(PlayerInteractEvent.RightClickEmpty event) {
-        Player player = event.getEntity();
-        if (event.getHand() != net.minecraft.world.InteractionHand.MAIN_HAND || player.level().isClientSide()) return;
-        // 蹲下 + 空手右键 = 脱下内裤；空主手右键 = 触发当前内裤的主动技能。
-        if (!player.isShiftKeyDown()) {
-            if (player.getMainHandItem().isEmpty()) BriefsMechanic.activeRightClick(player);
-            return;
-        }
-        BriefsCapability.IUnderwearHandler handler = BriefsCapability.get(player);
-        ItemStack worn = handler.getStack();
-        if (!worn.isEmpty()) {
-            handler.setStack(ItemStack.EMPTY);
-            player.getInventory().placeItemBackInInventory(worn);
-            refreshAttributes(player);
-            if (player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) BriefsNetwork.sync(serverPlayer);
-        }
+        BriefsGear.onAttack(player);
+        BriefsEcho.onAttack(player, target);
+        BriefsCryo.onAttack(player, target);
+        BriefsFlux.onAttack(player, target);
+        BriefsStorm.onAttack(player, target);
+        BriefsShadow.onAttack(player, target);
+        BriefsChrono.onAttack(player, target);
     }
 
     @SubscribeEvent

@@ -109,7 +109,10 @@ public final class BriefsArmorItem extends ArmorItem {
         if (mechanicKey != null) {
             tooltip.add(Component.translatable("tooltip.brief_guard.mechanic").append(Component.translatable(mechanicKey)));
         }
-        if (usesUnderwearSlot()) tooltip.add(Component.translatable("tooltip.brief_guard.remove"));
+        if (usesUnderwearSlot()) {
+            tooltip.add(Component.translatable("tooltip.brief_guard.remove"));
+            if (BriefsMechanic.hasActive(kind)) tooltip.add(Component.translatable("tooltip.brief_guard.activate"));
+        }
     }
 
     private static String mechanicKey(BriefsMaterialKind kind) {
@@ -128,6 +131,19 @@ public final class BriefsArmorItem extends ArmorItem {
             case GASEOUS: return "tooltip.brief_guard.m_gaseous";
             case SWORD: return "tooltip.brief_guard.m_sword";
             case SHIELD: return "tooltip.brief_guard.m_shield";
+            case MECHANICAL: return "tooltip.brief_guard.m_mechanical";
+            case SEVEN_CURSES: return "tooltip.brief_guard.m_seven_curses";
+            case HI_TEETH: return "tooltip.brief_guard.m_hi_teeth";
+            case FIREWORK: return "tooltip.brief_guard.m_firework";
+            case BRIEFS_BRIEFS: return "tooltip.brief_guard.m_briefs_briefs";
+            case POOR: return "tooltip.brief_guard.m_poor";
+            case BROKEN: return "tooltip.brief_guard.m_broken";
+            case HEAVY: return "tooltip.brief_guard.m_heavy";
+            case RAINBOW: return "tooltip.brief_guard.m_rainbow";
+            case CURRY: return "tooltip.brief_guard.m_curry";
+            case ENDER_PEARL: return "tooltip.brief_guard.m_ender_pearl";
+            case CREEPER: return "tooltip.brief_guard.m_creeper";
+            case MIRROR: return "tooltip.brief_guard.m_mirror";
             default: return null;
         }
     }

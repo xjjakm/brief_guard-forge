@@ -1,0 +1,1 @@
+{"type":"minecraft:crafting_shaped","pattern":[" O "," D "," I "],"key":{"O":{"item":"minecraft:obsidian"},"D":{"item":"minecraft:black_dye"},"I":{"item":"minecraft:ink_sac"}},"result":{"item":"brief_guard:veil_charm","count":1}}

@@ -3,17 +3,20 @@ package cn.blockforge.generated.briefguard.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import cn.blockforge.generated.briefguard.BriefsCapability;
 import cn.blockforge.generated.briefguard.BriefsNetwork;
 
 /**
- * 内裤栏 HUD：在快捷栏左侧独立显示当前穿着的内裤（空槽也常显）。
- * 在空手、未打开任何界面时点击该槽位即可脱下内裤。
+ * 内裤栏 HUD：在快捷栏左侧独立显示当前穿着的内裤（空槽也常显），并显示其积蓄进度。
+ * 空手右键（未指向方块）可脱下；蹲下 + 空手右键可激活主动技能。
  */
 @Mod.EventBusSubscriber(modid = "brief_guard", bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public final class BriefsHud {
@@ -47,6 +50,34 @@ public final class BriefsHud {
         // 标签
         gui.drawString(mc.font, Component.translatable("hud.brief_guard.briefs_bar"),
                 x - 1, y - 11, 0xE0E0E0);
+
+        // 积蓄提示：进度条 + 数值。
+        int kind = BriefsClient.accumKind();
+        int value = BriefsClient.accumValue();
+        int max = BriefsClient.accumMax();
+        if (max > 0) {
+            int clamped = Math.max(0, Math.min(max, value));
+            int filled = (int) Math.round(SIZE * (double) clamped / max);
+            int barColor = clamped >= max ? 0xFFFFD24A : 0xFF7CE86A;
+            gui.fill(x + 1, y + SIZE - 4, x + 1 + Math.max(1, filled), y + SIZE - 2, barColor);
+            String text = BriefsClient.gaugeText(kind, value, max);
+            gui.drawString(mc.font, text, x, y - 20, 0xFFFFFF);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onRightClickEmpty(PlayerInteractEvent.RightClickEmpty event) {
+        if (event.getHand() != InteractionHand.MAIN_HAND) return;
+        Player player = event.getEntity();
+        if (player == null) return;
+        // 仅在客户端（Dist.CLIENT）处理：空手右键，未指向方块。
+        if (!player.getMainHandItem().isEmpty()) return;
+        if (BriefsCapability.get(player).getStack().isEmpty()) return;
+        if (player.isShiftKeyDown()) {
+            BriefsNetwork.sendActivate();
+        } else {
+            BriefsNetwork.sendRemove();
+        }
     }
 
     @SubscribeEvent

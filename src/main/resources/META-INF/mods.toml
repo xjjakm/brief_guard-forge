@@ -6,7 +6,7 @@ modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
 authors="AutoMods"
-description='''二十一种可穿戴内裤防具，包含独立内裤栏、材质被动效果与机制、三角合成和穿戴模型。'''
+description='''三十三种可穿戴内裤防具，包含独立内裤栏、材质被动效果与复杂机制、三角合成和穿戴模型。'''
 [[dependencies.${mod_id}]]
 modId="forge"
 mandatory=true
